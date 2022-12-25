@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:shake/shake.dart';
 
 void main() {
   return runApp(MaterialApp(
@@ -23,6 +24,20 @@ class DiceApp extends StatefulWidget {
 }
 
 class _DiceAppState extends State<DiceApp> {
+  @override
+  void initState() {
+    super.initState();
+    ShakeDetector detector = ShakeDetector.autoStart(
+      onPhoneShake: () {
+        changeDiceNumber();
+      },
+      minimumShakeCount: 1,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
+  }
+
   int leftDiceNumber = Random().nextInt(6) + 1;
   int rightDiceNumber = Random().nextInt(6) + 1;
 
